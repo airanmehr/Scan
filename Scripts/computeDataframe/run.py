@@ -20,5 +20,4 @@ path=utl.dataPath1000GP+'dataframe/'
 utl.mkdir(path)
 CHROM=sys.argv[1]
 utl.VCF.computeFreqsChromosome(CHROM).to_pickle('{}chr{}.df'.format(path,CHROM))
-
 print 'CHROM {} done in {} mins!'.format(CHROM,int((time.time()-startTime)/60))
