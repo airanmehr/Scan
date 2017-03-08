@@ -1,12 +1,3 @@
-[submodule "selscan"]
-	path = selscan
-	url = git@github.com:szpiech/selscan.git
-[submodule "sweed"]
-	path = sweed
-	url = git@github.com:alachins/sweed.git
-[submodule "Utils"]
-	path = Utils
-	url = https://github.com/airanmehr/Utils.git
 [submodule "SDS"]
 	path = SDS
 	url = git@github.com:yairf/SDS.git
