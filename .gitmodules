@@ -4,3 +4,12 @@
 [submodule "SFSelect"]
 	path = SFSelect
 	url = https://github.com/airanmehr/SFSelect.git
+[submodule "selscan"]
+	path = selscan
+	url = git@github.com:szpiech/selscan.git
+[submodule "sweed"]
+	path = sweed
+	url = git@github.com:alachins/sweed.git
+[submodule "Utils"]
+	path = Utils
+	url = https://github.com/airanmehr/Utils.git
