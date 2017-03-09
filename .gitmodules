@@ -1,9 +1,6 @@
 [submodule "SFSelect"]
 	path = SFSelect
 	url = https://github.com/airanmehr/SFSelect.git
-[submodule "Utils"]
-	path = Utils
-	url = https://github.com/airanmehr/Utils.git
 [submodule "sweed"]
 	path = sweed
 	url = git@github.com:airanmehr/sweed.git
