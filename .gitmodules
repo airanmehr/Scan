@@ -1,15 +1,15 @@
-[submodule "SDS"]
-	path = SDS
-	url = git@github.com:yairf/SDS.git
 [submodule "SFSelect"]
 	path = SFSelect
 	url = https://github.com/airanmehr/SFSelect.git
-[submodule "selscan"]
-	path = selscan
-	url = git@github.com:szpiech/selscan.git
-[submodule "sweed"]
-	path = sweed
-	url = git@github.com:alachins/sweed.git
 [submodule "Utils"]
 	path = Utils
 	url = https://github.com/airanmehr/Utils.git
+[submodule "sweed"]
+	path = sweed
+	url = git@github.com:airanmehr/sweed.git
+[submodule "selscan"]
+	path = selscan
+	url = git@github.com:airanmehr/selscan.git
+[submodule "SDS"]
+	path = SDS
+	url = git@github.com:airanmehr/SDS.git
