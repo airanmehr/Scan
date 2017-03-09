@@ -43,7 +43,7 @@ def scanGenome(winSize,genome,n,nProc=10):
 def scan1000GP(pop,wins=[50,200,500,1000]):
     if pop=='ALL':n=2504
     else:n=utl.VCF.loadPanel().groupby('pop').size()[pop]
-    df=pd.concat(map(lambda w: scanGenome(w*1000,pop,n),wins),1)
+    df=pd.concat(map(lambda w: scanGenome(w*1000,pop,n),wins),1,keys=wins)
     df.to_pickle(utl.parentdir(utl.dataPath1000GP)+'/scan/{}.SFS.df'.format(pop))
 
 def loadGenes(Intervals=True):
