@@ -51,8 +51,8 @@ def loadGenes(Intervals=True):
     a.CHROM=a.CHROM.apply(lambda x: utl.INT(x[3:]))
     a=a.set_index('pop')
     if Intervals:
-        a['start']=a.POS-1e5
-        a['end']=a.POS+1e5
+        a['start']=a.POS-2e6
+        a['end']=a.POS+2e6
         a['name']=a.gene
     return a
 def scan1000GPAll():
@@ -65,12 +65,12 @@ def genesA():
     genes=loadGenes().loc[pop]
     scan=pd.read_pickle(utl.parentdir(utl.dataPath1000GP)+'/scan/{}.SFS.df'.format(pop))
     scan.columns=[50,200,500,1000]
-    a=scan[500].dropna().unstack('method')['SFSelect']
-    a.shape
-    plt.show()
-    pplt.Manhattan(a.loc[[22]])
-    genes=loadGenes().loc['YRI'].dropna()
-    g=loadChrom(22,'YRI')
+
+
+# a=scan[500].dropna().unstack('method')['FayWu']
+# # I=range(1,5)+range(7,23)a=a.loc[I]
+# pplt.Manhattan(a,shade=genes)
+# for _,row in genes.iterrows():plt.annotate('{}'.format(row['name']), xy=(row.loc['gstart'], (a.max())), xytext=(row.loc['gstart'], 5),fontsize=22)
 
 
 
