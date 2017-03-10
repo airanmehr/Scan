@@ -22,8 +22,9 @@ from multiprocessing import Pool
 import Scan.Libs.Util as sutl
 
 
+path='/pedigree2/projects/HA_selection2/Kyrgyz/hg19/intermediate_files/kyrgyz.hg19.sorted.NoChr.dupRemoved.chr22.conform.phased.vcf.gz.vcf.gz'
 
 if __name__ == '__main__':
     #sutl.scan1000GPAll()
-    fname,chrom='/home/arya/storage/Data/Human/Kyrgyz/data/chr22_Kyrgyz_merged_all34_NoChr_filter1_rmFORMAT.vcf.gz',22
+    fname,chrom=path,22
     print utl.VCF.createGeneticMap(fname,chrom)
