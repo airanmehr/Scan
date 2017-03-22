@@ -67,6 +67,7 @@ def genesA():
     scan.columns=[50,200,500,1000]
 
 
+
 # a=scan[500].dropna().unstack('method')['FayWu']
 # # I=range(1,5)+range(7,23)a=a.loc[I]
 # pplt.Manhattan(a,shade=genes)
