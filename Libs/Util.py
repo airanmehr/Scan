@@ -46,15 +46,7 @@ def scan1000GP(pop,wins=[50,200,500,1000]):
     df=pd.concat(map(lambda w: scanGenome(w*1000,pop,n),wins),1,keys=wins)
     df.to_pickle(utl.parentdir(utl.dataPath1000GP)+'/scan/{}.SFS.df'.format(pop))
 
-def loadGenes(Intervals=True):
-    a=pd.read_csv(utl.dataPath+'Human/WNG_1000GP_Phase3/gene_info.csv')[['chrom','pop','gene','POS_hg19']].rename(columns={'chrom':'CHROM','POS_hg19':'POS'})
-    a.CHROM=a.CHROM.apply(lambda x: utl.INT(x[3:]))
-    a=a.set_index('pop')
-    if Intervals:
-        a['start']=a.POS-2e6
-        a['end']=a.POS+2e6
-        a['name']=a.gene
-    return a
+
 def scan1000GPAll():
     pops=utl.VCF.loadPanel()
     pops=['ALL']+ pops['super_pop'].unique().tolist()+pops['pop'].unique().tolist()

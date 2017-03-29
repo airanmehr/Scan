@@ -36,7 +36,7 @@ def getCHROM(VCFin):
 def scan(VCFin, method, pop=None,panel=None,nProc=4):
     print "running {} on".format(method)#, VCFin
     chrom=getCHROM(VCFin)
-    if pop is not None:VCFin,panel=subset(VCFin,pop,panel,chrom)
+    if pop is not None:VCFin=utl.VCF.subset(VCFin,pop,panel,chrom)
     print chrom;sys.stdout.flush()
     utl.VCF.createGeneticMap(VCFin, chrom)
     output = VCFin.split(".vcf")[0]
@@ -44,16 +44,8 @@ def scan(VCFin, method, pop=None,panel=None,nProc=4):
     print cmd
     os.system(cmd)
     if pop is not None:
-        os.remove(VCFin);os.remove(panel)
-def subset(VCFin, pop,panel,chrom):
-    assert len(pop)
-    print 'Creating a vcf.gz file for individuals of {} population'.format(pop)
-    fileSamples='{}.{}.chr{}'.format(panel,pop,chrom)
-    fileVCF=VCFin.replace('.vcf.gz','.{}.vcf.gz'.format(pop))
-    os.system('grep {} {} | cut -f1 >{}'.format(pop,panel,fileSamples))
-    cmd="{} view -S {} {} | {} filter -i \"N_ALT=1 & TYPE='snp'\" -O z -o {}".format(bcf,fileSamples,VCFin,bcf,fileVCF)
-    os.system(cmd)
-    return fileVCF,fileSamples
+        if pop is not 'ALL':os.remove(VCFin);
+
 
 if __name__ == "__main__":
     VCF,method,pop,panel,proc=options.vcf,options.method,options.pop,options.panel,options.proc
