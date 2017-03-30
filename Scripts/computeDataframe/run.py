@@ -17,10 +17,13 @@ import Utils.Util as utl
 from time import  time
 startTime=time()
 path=utl.dataPath1000GP+'dataframe/'
+path='/home/arya/HA_selection2/Kyrgyz/hg19/phased/dataframe/'
+fin='/home/arya/HA_selection2/Kyrgyz/hg19/phased/chr{}.vcf.gz'
+panel='/home/arya/HA_selection2/Kyrgyz/kyrgyz.panel'
 utl.mkdir(path)
 CHROM=sys.argv[1]
-utl.VCF.computeFreqsChromosome(CHROM).to_pickle('{}chr{}.df'.format(path,CHROM))
-print 'CHROM {} done in {} mins!'.format(CHROM,int((time.time()-startTime)/60))
+utl.VCF.computeFreqsChromosome(CHROM,fin=fin,panel=panel,hap=True).to_pickle('{}chr{}.df'.format(path,CHROM))
+print 'CHROM {} done in {} mins!'.format(CHROM,int((time()-startTime)/60))
 
-CHROM=22
-pd.read_pickle('{}chr{}.df'.format(path,CHROM))
+# CHROM=22
+# pd.read_pickle('{}chr{}.df'.format(path,CHROM))
