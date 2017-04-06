@@ -5,10 +5,7 @@ import numpy as np;
 import sys
 sys.path.insert( 1, '/home/arya/workspace/bio/')
 np.set_printoptions(linewidth=200, precision=5, suppress=True)
-import pandas as pd;
-
-pd.options.display.max_rows = 40;
-pd.options.display.expand_frame_repr = False
+import pandas as pd;pd.options.display.max_rows = 20;pd.options.display.expand_frame_repr = False
 import seaborn as sns
 import pylab as plt;
 import matplotlib as mpl
@@ -19,11 +16,10 @@ startTime=time()
 path=utl.dataPath1000GP+'dataframe/'
 path='/home/arya/HA_selection2/Kyrgyz/hg19/phased/dataframe/'
 fin='/home/arya/HA_selection2/Kyrgyz/hg19/phased/chr{}.vcf.gz'
+fin='/home/arya/HA_selection2/Kyrgyz/hg38/merged_vcf/ByChr/hg38/chr{}_Kyrgyz_merged_all34_NoChr_filter1_rmFORMAT.vcf.gz'
 panel='/home/arya/HA_selection2/Kyrgyz/kyrgyz.panel'
 utl.mkdir(path)
 CHROM=sys.argv[1]
-utl.VCF.computeFreqsChromosome(CHROM,fin=fin,panel=panel,hap=True).to_pickle('{}chr{}.df'.format(path,CHROM))
+reload(utl)
+print utl.VCF.computeFreqsChromosome(CHROM,fin=fin,panel=panel,genotype= True,save=True)
 print 'CHROM {} done in {} mins!'.format(CHROM,int((time()-startTime)/60))
-
-# CHROM=22
-# pd.read_pickle('{}chr{}.df'.format(path,CHROM))
