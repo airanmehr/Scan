@@ -3,11 +3,11 @@ echo 'running...' > ~/qsub.out
 procPerNode=4
 panel=~/HA_selection2/Kyrgyz/kyrgyz.panel
 
-pop=Sick && popxp=Healthy
-pop=HAPH && popxp=No-HAPH
-pop=HAPH && popxp=Healthy
-pop=No-HAPH && popxp=Sick
-pop=Hyper && popxp=Normo
+popxp=Sick && pop=Healthy
+popxp=HAPH && pop=No-HAPH
+popxp=HAPH && pop=Healthy
+popxp=Sick && pop=No-HAPH
+popxp=Hyper && pop=Normo
 for CHROM in {1..22}
 do
     VCF=/pedigree2/projects/HA_selection2/Kyrgyz/hg19/phased/chr$CHROM.vcf.gz
