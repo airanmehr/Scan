@@ -3,10 +3,10 @@ echo 'running...' > ~/qsub.out
 procPerNode=4
 panel=~/HA_selection2/Kyrgyz/kyrgyz.panel
 
+popxp=Sick && pop=Healthy
 popxp=HAPH && pop=No-HAPH
 popxp=HAPH && pop=Healthy
 popxp=Sick && pop=No-HAPH
-popxp=Sick && pop=Healthy
 popxp=Hyper && pop=Normo
 for CHROM in {1..22}
 do
