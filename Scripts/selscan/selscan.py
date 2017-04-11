@@ -46,28 +46,32 @@ def scan(VCFin, method, pop=None,panel=None,nProc=4):
     os.system(cmd)
     if (pop is not None) and (pop != 'ALL'):os.remove(VCFin);
 
+
+def split():
+    panel='~/HA_selection2/Kyrgyz/kyrgyz.panel'
+    for chrom in range(1,23):
+        VCF='/pedigree2/projects/HA_selection2/Kyrgyz/hg19/phased/chr{}.vcf.gz'.format(chrom)
+        print chrom,VCF
+        POPS=['HAPH','No-HAPH','Hyper','Normo','Healthy','Sick','ALL']
+        VCF=map(lambda pop:utl.VCF.subset(VCF,pop,panel,chrom),POPS)
+        map(lambda vcf:utl.VCF.createGeneticMap(vcf, chrom),VCF)
+
 def scanXP(VCFin,  pop1, pop2,panel,nProc=4):
     print "running {} on".format(method)#, VCFin
+    print VCFin.split(".vcf")[0]
     chrom=getCHROM(VCFin)
-    if pop is not None:
-        VCFin1=utl.VCF.subset(VCFin,pop1,panel,chrom)
-        utl.VCF.createGeneticMap(VCFin1, chrom)
-    if pop is not None:
-        VCFin2=utl.VCF.subset(VCFin,pop2,panel,chrom)
-        utl.VCF.createGeneticMap(VCFin2, chrom)
+    VCFin1=utl.VCF.subset(VCFin,pop1,panel,chrom);#utl.VCF.createGeneticMap(VCFin1, chrom)
+    VCFin2=utl.VCF.subset(VCFin,pop2,panel,chrom);#utl.VCF.createGeneticMap(VCFin2, chrom)
     output = VCFin.split(".vcf")[0]
     cmd = "{} --xpehh --vcf {} --vcf-ref {} --map {} --out {}.{}_{} --threads {} --trunc-ok".format(selscan, VCFin1,VCFin2, VCFin1+'.map', output,pop,popxp, nProc)
     print cmd
     os.system(cmd)
-    if pop is not None:
-        if pop is not 'ALL':os.remove(VCFin1);
-    if popxp is not None:
-        if popxp is not 'ALL':os.remove(VCFin2);
 
 if __name__ == "__main__":
     VCF,method,pop,panel,proc, popxp=options.vcf,options.method,options.pop,options.panel,options.proc, options.popxp
     # proc=10;VCF='/pedigree2/projects/HA_selection2/Beagle/filtered/chr2.1kg.phase3.v5a.vcf.gz';method='ihs';pop='CEU';panel='/home/arya/HA_selection2/Beagle/panel'
-    # proc=10;VCF='/pedigree2/projects/HA_selection2/Kyrgyz/hg19/phased/chr22.vcf.gz';method='ihs';pop='Sick';popxp='Healthy';panel='~/HA_selection2/Kyrgyz/kyrgyz.panel'
+    #proc=10;VCF='/pedigree2/projects/HA_selection2/Kyrgyz/hg19/phased/chr22.vcf.gz';method='ihs';pop='Sick';popxp='Healthy';panel='~/HA_selection2/Kyrgyz/kyrgyz.panel'
+    #split()
     if popxp is not None:
         scanXP(VCF,pop,popxp,panel,proc)
     else:
