@@ -44,15 +44,24 @@ def mergeGenotypes():
     import Scripts.KyrgysHAPH.Util as kutl
     reload(kutl)
     map(lambda x:kutl.fixAA(pd.read_pickle(f.format(x)).reset_index(['ID','REF','ALT'],drop=True),True).to_pickle(f.format(x).replace('.df','.aa.df')),CHROM)
-    g=[]
-    x='Y'
-    for x in  ['X','Y','M']+range(1,23):
-        print x
-        # a=pd.read_pickle(f.format(x).replace('.df','.aa.df')); if x=='M':continue
-        a=pd.read_pickle(f.format(x))
-        g+=[pd.concat([a.xs('No-HAPH',level=1,axis=1).apply(lambda x: x.value_counts(),1),a.xs('HAPH',level=1,axis=1).apply(lambda x: x.value_counts(),1)],1,keys=['No-HAPH','HAPH'])]
-    pd.concat(g).fillna(0).to_pickle('/home/arya/HA_selection2/Kyrgyz/hg38/gt.contingency.df')
 
-    aa=pd.concat([a.xs('No-HAPH',level=1,axis=1).apply(lambda x: x.value_counts(),1),a.xs('HAPH',level=1,axis=1).apply(lambda x: x.value_counts(),1)],1,keys=['No-HAPH','HAPH'])
-    aaa=aa.iloc[:10].fillna(0).reset_index(['ID','REF','ALT'],drop=True)
-    aaa.stack(level=0).groupby(level=[0,1]).apply(lambda x: utl.pval.x.T)
+    def contingency(a,pop,pop2=None):
+        one=lambda p:pd.concat([pd.concat([(a.xs(p,level=1,axis=1)==0).sum(1).rename(0),(a.xs(p,level=1,axis=1)==1).sum(1).rename(1),(a.xs(p,level=1,axis=1)==2).sum(1).rename(2)],1)],1,keys=[p])
+        c1=one(pop)
+        if pop2 is not None:return pd.concat([c1,one(pop2)],1)
+        return c1
+
+    def hammingGT(a):
+        pops=list(a.columns.levels[0])
+        return (a[pops[0]]-a[pops[1]]).abs().sum(1)
+
+    hamm=pd.concat(map(lambda x: hammingGT(contingency(pd.read_pickle(f.format(x)),'HAPH','No-HAPH')).reset_index(['ID','REF','ALT'],drop=True),['X','Y','M']+range(1,23))).sort_index()
+    hamm.to_pickle('/home/arya/HA_selection2/Kyrgyz/hg38/merged_vcf/ByChr/hg38/gt.hamming.df')
+    hamm=hamm.sort_index()
+    hamm.groupby(level=0).quantile(0.99).plot()
+    hammaa=pd.concat(map(lambda x:hammingGT(contingency(pd.read_pickle(f.format(x).replace('.df','.aa.df')),'HAPH','No-HAPH')),['X','Y']+range(1,23))).sort_index()
+    hammaa.to_pickle('/home/arya/HA_selection2/Kyrgyz/hg38/merged_vcf/ByChr/hg38/gt.aa.hamming.df')
+
+
+
+    # utl.pval.fisher3by2(zz)
