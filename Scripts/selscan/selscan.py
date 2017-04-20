@@ -44,7 +44,6 @@ def scan(VCFin, method, pop=None,panel=None,nProc=4):
     cmd = "{} --{} --vcf {} --map {} --out {} --threads {} --trunc-ok".format(selscan,method.lower(), VCFin, VCFin+'.map', output, nProc)
     print cmd
     os.system(cmd)
-    if (pop is not None) and (pop != 'ALL'):os.remove(VCFin);
 
 
 def split():
@@ -72,6 +71,7 @@ if __name__ == "__main__":
     # proc=10;VCF='/pedigree2/projects/HA_selection2/Beagle/filtered/chr2.1kg.phase3.v5a.vcf.gz';method='ihs';pop='CEU';panel='/home/arya/HA_selection2/Beagle/panel'
     #proc=10;VCF='/pedigree2/projects/HA_selection2/Kyrgyz/hg19/phased/chr22.vcf.gz';method='ihs';pop='Sick';popxp='Healthy';panel='~/HA_selection2/Kyrgyz/kyrgyz.panel'
     #split()
+    print 'hi'
     if popxp is not None:
         scanXP(VCF,pop,popxp,panel,proc)
     else:

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-echo 'running...' > ~/qsub.out
-procPerNode=1
-for CHROM in {1..22} X Y M
-do
-    qsub -l nodes=1:ppn=$procPerNode -N chr$CHROM -v CHROM=$CHROM  ./qsub.sh
-done

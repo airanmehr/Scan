@@ -13,7 +13,20 @@ import pylab as plt;
 import matplotlib as mpl
 import os;
 import Utils.Util as utl
+
+def createMap():
+    f='/home/arya/storage/Data/Human/20130502/ALL/dataframe/chr{}.df'
+    maped=[]
+    for CHROM in range(1,23)+ ['X','Y','M']:
+        print CHROM
+        a=pd.read_pickle(f.format(CHROM)).reset_index()[['CHROM','POS']].rename(columns={'POS':'start'})
+        a['end']=a.start
+        maped+=[utl.BED.xmap_bed(a,38,19).xs('start',axis=1,level=1)]
+    maped=pd.concat(maped)
+    maped.to_pickle('/home/arya/storage/Data/Human/20130502/ALL/dataframe/map.df')
+
 def AAhg19(Chr,path="/home/arya/HA_selection2/Kyrgyz/hg19/AA/human_ancestor_{}.fa"):
+    print Chr
     with open(path.format(Chr)) as f:
         f.readline()
         return f.read().replace("\n","").upper()
@@ -26,11 +39,19 @@ def f(x):
     AA = []
     for pos in x:AA += [ref[pos - 1]]
     return pd.Series(AA,index=x)
+def AA(pos):
+    """
+    :param pos: a series of positions which index is CHROM
+    :return: ancesstral allele for the positions
+    """
+    aa=pos.groupby(level=0).apply(f).rename('AA');
+    aa.index.names=['CHROM','POS']
+    return aa
 def computeAA():
     path='/home/arya/HA_selection2/Kyrgyz/hg38/merged_vcf/DataFrame/Kyrgyz_merged_all34_NoChr_filter1_rmFORMAT.snp.info.pkl'
     a=pd.read_pickle(path);a.index.names=['CHROM','POS']
     m=pd.read_pickle('/home/arya/storage/Data/Human/Kyrgyz/data/map.df').applymap(int).reset_index().drop_duplicates(subset=['CHROM',19]).set_index('CHROM')
-    aa=m[19].groupby(level=0).apply(f).rename('AA');
+    aa=AA(m[19])
     aa.index.names=['CHROM',19]
     aa.reset_index()[['CHROM',19]].duplicated().sum()
     m=pd.concat([m.set_index(19,append=True),aa],1).fillna('.')

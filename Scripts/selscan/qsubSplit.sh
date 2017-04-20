@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 #!/bin/bash
+
 #PBS -m ae
+
 #PBS -l walltime=200:00:00
+
 #PBS -V
 #PBS -e ~/qsub.out
 #PBS -o ~/qsub.out
@@ -10,5 +13,5 @@
 #PBS -p 100
 cd "$PBS_O_WORKDIR"
 numproc=$procPerNode
-echo $method $VCF     >>~/qsub.out
-python ./selscan.py  --method $method --vcfgz $VCF --pop $pop --panel $panel --proc $numproc >> ~/qsub.out 2>> ~/qsub.out
+bcf=~/bin/bcftools/bcftools
+($bcf view $VCF.vcf.gz -S $samples -O z -o $VCF.$pop.vcf.gz && $bcf index -t $VCF.$pop.vcf.gz )>> ~/qsub.out 2>> ~/qsub.out

@@ -13,16 +13,30 @@ import os;
 import Utils.Util as utl
 from time import  time
 startTime=time()
-path=utl.dataPath1000GP+'dataframe/'
-path='/home/arya/HA_selection2/Kyrgyz/hg19/phased/dataframe/'
-fin='/home/arya/HA_selection2/Kyrgyz/hg19/phased/chr{}.vcf.gz'
-fin='/home/arya/HA_selection2/Kyrgyz/hg38/merged_vcf/ByChr/hg38/chr{}_Kyrgyz_merged_all34_NoChr_filter1_rmFORMAT.vcf.gz'
-panel='/home/arya/HA_selection2/Kyrgyz/kyrgyz.panel'
-utl.mkdir(path)
-CHROM=sys.argv[1]
-reload(utl)
-print utl.VCF.computeFreqsChromosome(CHROM,fin=fin,panel=panel,genotype= True,save=True)
-print 'CHROM {} done in {} mins!'.format(CHROM,int((time()-startTime)/60))
+
+
+# path=utl.dataPath1000GP+'dataframe/'
+# path='/home/arya/HA_selection2/Kyrgyz/hg19/phased/dataframe/'
+# fin='/home/arya/HA_selection2/Kyrgyz/hg19/phased/chr{}.vcf.gz'
+# fin='/home/arya/HA_selection2/Kyrgyz/hg38/merged_vcf/ByChr/hg38/chr{}_Kyrgyz_merged_all34_NoChr_filter1_rmFORMAT.vcf.gz'
+# panel='/home/arya/HA_selection2/Kyrgyz/kyrgyz.panel'
+# CHROM=sys.argv[1]
+# #CHROM=22
+# fin='/home/arya/HA_selection2/Beagle/filtered/chr{}.1kg.phase3.v5a.vcf.gz'.format(CHROM)
+# panel=utl.dataPath1000GP+'integrated_call_samples_v3.20130502.ALL.panel'
+# reload(utl)
+# print utl.VCF.computeFreqsChromosome(CHROM,fin=fin,panel=panel,genotype= not True,save=True)
+# print 'CHROM {} done in {} mins!'.format(CHROM,int((time()-startTime)/60))
+
+def paternalMaternalChroms():
+    CHROM='MT'
+    fin='/home/arya/storage/Data/Human/20130502/ALL/ALL.chr{}.phase3_callmom-v0_4.20130502.genotypes.vcf.gz'
+    a=utl.VCF.computeFreqsChromosome(CHROM,fin=fin,genotype= not True,save=not True,haploid=True).reset_index().replace('MT','M').set_index(['CHROM','POS','ID','REF','ALT'])
+    a.to_pickle('/home/arya/storage/Data/Human/20130502/ALL/dataframe/chrM.df')
+    CHROM='Y'
+    fin='/home/arya/storage/Data/Human/20130502/ALL/ALL.chr{}.phase3_integrated_v2a.20130502.genotypes.vcf.gz'
+    a=utl.VCF.computeFreqsChromosome(CHROM,fin=fin,genotype= not True,save=not True,haploid=True)
+    a.to_pickle('/home/arya/storage/Data/Human/20130502/ALL/dataframe/chrY.df')
 
 def mergeGenotypes():
     f='/home/arya/HA_selection2/Kyrgyz/hg38/merged_vcf/ByChr/hg38/chr{}_Kyrgyz_merged_all34_NoChr_filter1_rmFORMAT.gt.df'
