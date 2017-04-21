@@ -28,15 +28,19 @@ def saveAA38():
     aa.AA.to_pickle('/home/arya/storage/Data/Human/20130502/ALL/dataframe/AA.hg38.df')
 
 def AAall():
+    from Scan.AA import AA
     def AAchr(CHROM):
+        print CHROM
         fin='/home/arya/storage/Data/Human/20130502/ALL/dataframe/chr{}.df'
-        aa=pd.read_pickle('/home/arya/storage/Data/Human/20130502/ALL/dataframe/AA.hg38.df').loc[CHROM]
-        a=pd.read_pickle(fin.format(CHROM)).reset_index(['ID','REF','ALT','CHROM'])
-        a= pd.DataFrame(aa).join(a,how='inner')
+        a=pd.read_pickle(fin.format(CHROM)).reset_index()
+        aa=pd.DataFrame(AA(a.set_index('CHROM')['POS']).loc[CHROM])
+        a=aa.join(a.set_index('POS'),how='inner')
         a=a[((a.AA==a.REF) | (a.AA==a.ALT))].reset_index().set_index(['CHROM','POS','ID','REF','ALT','AA'])
         I=a.index.get_level_values('AA')==a.index.get_level_values('ALT')
         a[I]=1-a[I]
-        a=a.reset_index(['REF','ALT','AA'],drop=True)
+        a=a.reset_index('REF',drop=True).reorder_levels([0,1,2,4,3])
+        a.index.names=['CHROM','POS','ID','REF','ALT']
         a.to_pickle(fin.format(CHROM).replace('.df','.aa.df'))
-    for CHROM in range(1,23)+['X']:
+    for CHROM in range(1,23)+['X','Y','M']:
         AAchr(CHROM)
+AAall()

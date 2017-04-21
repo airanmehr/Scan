@@ -16,14 +16,16 @@ import Utils.Util as utl
 
 def createMap():
     f='/home/arya/storage/Data/Human/20130502/ALL/dataframe/chr{}.df'
-    maped=[]
     for CHROM in range(1,23)+ ['X','Y','M']:
         print CHROM
-        a=pd.read_pickle(f.format(CHROM)).reset_index()[['CHROM','POS']].rename(columns={'POS':'start'})
-        a['end']=a.start
-        maped+=[utl.BED.xmap_bed(a,38,19).xs('start',axis=1,level=1)]
-    maped=pd.concat(maped)
-    maped.to_pickle('/home/arya/storage/Data/Human/20130502/ALL/dataframe/map.df')
+        a=pd.read_pickle(f.format(CHROM)).reset_index()[['CHROM','POS']].rename(columns={'POS':'start'});a['end']=a.start
+        reload(utl)
+        b=utl.BED.xmap_bed(a,37,19).xs('start',axis=1,level=1).astype(int)
+        b.to_pickle(f.format(CHROM).replace('.df','map.df'))
+        print a.shape
+        print b.shape
+        print (b['GRCh37']!=b['Hg19']).sum()
+
 
 def AAhg19(Chr,path="/home/arya/HA_selection2/Kyrgyz/hg19/AA/human_ancestor_{}.fa"):
     print Chr
