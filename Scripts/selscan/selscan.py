@@ -19,7 +19,7 @@ reload(utl)
 from subprocess import Popen, PIPE, STDOUT
 bcf='/home/arya/bin/bcftools/bcftools'
 selscan = "/home/arya/workspace/bio/Scan/selscan/bin/linux/selscan"
-
+selscanNorm='/home/arya/workspace/bio/Scan/selscan/bin/linux/norm'
 import optparse
 parser = optparse.OptionParser()
 parser.add_option( '--method', action="store", dest="method", help="path to synchronized file created by popoolation2")
@@ -34,16 +34,18 @@ def getCHROM(VCFin):
     return utl.INT(Popen(['zgrep -v "#" -m1 {} | cut -f1'.format(VCFin)], stdout=PIPE, stdin=PIPE, stderr=STDOUT,shell=True).communicate()[0].strip().split('\n')[-1])
 
 
-def scan(VCFin, method, pop=None,panel=None,nProc=4):
+def scan(VCFin, method, pop=None,panel=None,nProc=1):
     print "running {} on".format(method)#, VCFin
     chrom=getCHROM(VCFin)
-    if pop is not None:VCFin=utl.VCF.subset(VCFin,pop,panel,chrom)
+    if pop is not None and '/POP/' not in VCFin:VCFin=utl.VCF.subset(VCFin,pop,panel,chrom)
     print chrom;sys.stdout.flush()
     utl.VCF.createGeneticMap(VCFin, chrom)
     output = VCFin.split(".vcf")[0]
     cmd = "{} --{} --vcf {} --map {} --out {} --threads {} --trunc-ok".format(selscan,method.lower(), VCFin, VCFin+'.map', output, nProc)
     print cmd
     os.system(cmd)
+    print 'Done!',pop,chrom
+    return '{}.{}.out'.format(output,method)
 
 
 def split():
@@ -55,7 +57,7 @@ def split():
         VCF=map(lambda pop:utl.VCF.subset(VCF,pop,panel,chrom),POPS)
         map(lambda vcf:utl.VCF.createGeneticMap(vcf, chrom),VCF)
 
-def scanXP(VCFin,  pop1, pop2,panel,nProc=4):
+def scanXP(VCFin,  pop1, pop2,panel,nProc=1):
     print "running {} on".format(method)#, VCFin
     print VCFin.split(".vcf")[0]
     chrom=getCHROM(VCFin)
@@ -65,15 +67,17 @@ def scanXP(VCFin,  pop1, pop2,panel,nProc=4):
     cmd = "{} --xpehh --vcf {} --vcf-ref {} --map {} --out {}.{}_{} --threads {} --trunc-ok".format(selscan, VCFin1,VCFin2, VCFin1+'.map', output,pop,popxp, nProc)
     print cmd
     os.system(cmd)
+    print 'Done!',pop,popxp,chrom
 
 if __name__ == "__main__":
     VCF,method,pop,panel,proc, popxp=options.vcf,options.method,options.pop,options.panel,options.proc, options.popxp
     # proc=10;VCF='/pedigree2/projects/HA_selection2/Beagle/filtered/chr2.1kg.phase3.v5a.vcf.gz';method='ihs';pop='CEU';panel='/home/arya/HA_selection2/Beagle/panel'
+    #proc=10;VCF='/pedigree2/projects/HA_selection2/1000GP/hg19/POP/CEU/chr22.vcf.gz';method='ihs';pop=None;panel='/home/arya/HA_selection2/Beagle/panel'
     #proc=10;VCF='/pedigree2/projects/HA_selection2/Kyrgyz/hg19/phased/chr22.vcf.gz';method='ihs';pop='Sick';popxp='Healthy';panel='~/HA_selection2/Kyrgyz/kyrgyz.panel'
     #split()
-    print 'hi'
     if popxp is not None:
         scanXP(VCF,pop,popxp,panel,proc)
     else:
-        scan(VCF,method,pop,panel,proc)
-    print 'Done!',pop,popxp
+        out=scan(VCF,method,pop,panel,proc)
+    print 'Normalizing...'
+    os.system("grep -v 'nan' {0} > {0}.tmp && mv {0}.tmp {0} && {1} --{2} --files {0}".format(out,selscanNorm,method.replace('nsl','ihs')))

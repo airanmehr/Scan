@@ -1,0 +1,97 @@
+running...
+Lines   total/split/realigned/skipped:	3771/0/0/0
+REF/ALT total/modified/added:  	3771/0/0
+Lines   total/split/realigned/skipped:	3771/0/0/0
+Lines   total/split/realigned/skipped:	60505/0/0/0
+REF/ALT total/modified/added:  	60505/0/0
+Lines   total/split/realigned/skipped:	60505/0/0/0
+Lines   total/split/realigned/skipped:	1059517/0/0/0
+REF/ALT total/modified/added:  	1059517/0/0
+Lines   total/split/realigned/skipped:	1058339/0/0/0
+REF/ALT total/modified/added:  	1058339/0/0
+Lines   total/split/realigned/skipped:	1758136/0/0/0
+REF/ALT total/modified/added:  	1758136/0/0
+Lines   total/split/realigned/skipped:	1744900/0/0/0
+REF/ALT total/modified/added:  	1744900/0/0
+Lines   total/split/realigned/skipped:	1059517/0/0/0
+Lines   total/split/realigned/skipped:	1058339/0/0/0
+Lines   total/split/realigned/skipped:	2234278/0/0/0
+REF/ALT total/modified/added:  	2234278/0/0
+Lines   total/split/realigned/skipped:	2178378/0/0/0
+REF/ALT total/modified/added:  	2178378/0/0
+Lines   total/split/realigned/skipped:	2328197/0/0/0
+REF/ALT total/modified/added:  	2328197/0/0
+Lines   total/split/realigned/skipped:	2606624/0/0/0
+REF/ALT total/modified/added:  	2606624/0/0
+Lines   total/split/realigned/skipped:	2547628/0/0/0
+REF/ALT total/modified/added:  	2547628/0/0
+Lines   total/split/realigned/skipped:	2736546/0/0/0
+REF/ALT total/modified/added:  	2736546/0/0
+Lines   total/split/realigned/skipped:	1758136/0/0/0
+Lines   total/split/realigned/skipped:	1744900/0/0/0
+Lines   total/split/realigned/skipped:	3426741/0/0/0
+REF/ALT total/modified/added:  	3426741/0/0
+Lines   total/split/realigned/skipped:	3709640/0/1/0
+REF/ALT total/modified/added:  	3709640/0/0
+Lines   total/split/realigned/skipped:	3890940/0/0/0
+REF/ALT total/modified/added:  	3890940/0/0
+Lines   total/split/realigned/skipped:	3836556/0/0/0
+REF/ALT total/modified/added:  	3836556/0/0
+./run.sh: error reading input file: Stale file handle
+./run.sh: error reading input file: Stale file handle
+Lines   total/split/realigned/skipped:	3238991/0/9/0
+REF/ALT total/modified/added:  	3238991/0/0
+Lines   total/split/realigned/skipped:	2178378/0/0/0
+Lines   total/split/realigned/skipped:	2234278/0/0/0
+Lines   total/split/realigned/skipped:	2328197/0/0/0
+Lines   total/split/realigned/skipped:	4433737/0/0/0
+REF/ALT total/modified/added:  	4433737/0/0
+Lines   total/split/realigned/skipped:	4532453/0/0/0
+REF/ALT total/modified/added:  	4532453/0/0
+Lines   total/split/realigned/skipped:	5054711/0/0/0
+REF/ALT total/modified/added:  	5054711/0/0
+Lines   total/split/realigned/skipped:	4816043/0/0/0
+REF/ALT total/modified/added:  	4816043/0/0
+Lines   total/split/realigned/skipped:	2606624/0/0/0
+Lines   total/split/realigned/skipped:	2547628/0/0/0
+./run.sh: error reading input file: Stale file handle
+./run.sh: error reading input file: Stale file handle
+./run.sh: error reading input file: Stale file handle
+Lines   total/split/realigned/skipped:	5602392/0/0/0
+REF/ALT total/modified/added:  	5602392/0/0
+Lines   total/split/realigned/skipped:	2736546/0/0/0
+Lines   total/split/realigned/skipped:	5499209/0/0/0
+REF/ALT total/modified/added:  	5499209/0/0
+./run.sh: error reading input file: Stale file handle
+./run.sh: error reading input file: Stale file handle
+Lines   total/split/realigned/skipped:	6215039/0/0/0
+REF/ALT total/modified/added:  	6215039/0/0
+./run.sh: error reading input file: Stale file handle
+Lines   total/split/realigned/skipped:	6807712/0/0/0
+REF/ALT total/modified/added:  	6807712/0/0
+Lines   total/split/realigned/skipped:	3426741/0/0/0
+Lines   total/split/realigned/skipped:	3709640/0/0/0
+Lines   total/split/realigned/skipped:	3890940/0/0/0
+Lines   total/split/realigned/skipped:	3836556/0/0/0
+./run.sh: error reading input file: Stale file handle
+./run.sh: error reading input file: Stale file handle
+Lines   total/split/realigned/skipped:	4433737/0/0/0
+Lines   total/split/realigned/skipped:	4532453/0/0/0
+Lines   total/split/realigned/skipped:	3238991/0/0/0
+./run.sh: error reading input file: Stale file handle
+./run.sh: error reading input file: Stale file handle
+Lines   total/split/realigned/skipped:	4816043/0/0/0
+Lines   total/split/realigned/skipped:	5054711/0/0/0
+./run.sh: error reading input file: Stale file handle
+./run.sh: error reading input file: Stale file handle
+Lines   total/split/realigned/skipped:	5602392/0/0/0
+Lines   total/split/realigned/skipped:	5499209/0/0/0
+./run.sh: error reading input file: Stale file handle
+./run.sh: error reading input file: Stale file handle
+./run.sh: error reading input file: Stale file handle
+Lines   total/split/realigned/skipped:	6215039/0/0/0
+./run.sh: error reading input file: Stale file handle
+./run.sh: error reading input file: Stale file handle
+Lines   total/split/realigned/skipped:	6807712/0/0/0
+./run.sh: error reading input file: Stale file handle
+./run.sh: error reading input file: Stale file handle

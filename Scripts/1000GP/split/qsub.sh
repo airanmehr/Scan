@@ -10,5 +10,5 @@
 #PBS -p 100
 cd "$PBS_O_WORKDIR"
 numproc=$procPerNode
-echo $method $VCF     >>./selscan.out
-python ./selscan.py  --method $method --vcfgz $VCF --pop $pop --panel $panel --proc $numproc >> ./selscan.out 2>> ./selscan.out
+#echo $CHROM >> ~/qsub.out
+./run.sh  $CHROM  $pop >> ./qsub.log 2>> ./qsub.err
