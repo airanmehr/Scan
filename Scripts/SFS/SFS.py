@@ -21,6 +21,9 @@ fname='/home/arya/HA_selection2/Beagle/filtered/chr{}.1kg.phase3.v5a.aa.df'.form
 pop=utl.VCF.loadPanel().groupby('super_pop').size()
 pop
 df=pd.read_pickle(fname)[pop.index]
+
+
+
 winSize=50000
 f=lambda x: pd.DataFrame(utl.scanGenome(x[x.name],uf=lambda X: est.Estimate.getEstimate(X, n=pop[x.name],  bins=20,removeFixedSites=True,normalizeTajimaD= False),winSize=winSize ))
 stats=df.groupby(level=0,axis=1).apply(f).T.reset_index(level=0,drop=True).T

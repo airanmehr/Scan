@@ -5,8 +5,8 @@ import numpy as np;
 
 np.set_printoptions(linewidth=200, precision=5, suppress=True)
 import pandas as pd;
-
-pd.options.display.max_rows = 20;
+import multiprocessing
+pd.options.display.max_rows = 40;
 pd.options.display.expand_frame_repr = False
 import seaborn as sns
 import pylab as plt;
@@ -34,4 +34,55 @@ def save(f='chr{}.1kg.phase3.v5a.{}.{}.out',method='ihs',pop='CEU',savepkl=True)
         if savepkl:a.to_pickle('{}{}.{}.df'.format(path,pop,method))
         return a
 
-map(lambda x: save(f='chr{}{}.{}.out{}.norm',method=x,pop=(POP,XPPOP)[x=='xpehh']),['ihs','nsl','xpehh'][-1:])
+#map(lambda x: save(f='chr{}{}.{}.out{}.norm',method=x,pop=(POP,XPPOP)[x=='xpehh']),['ihs','nsl','xpehh'][-1:])
+path='/home/arya/HA_selection2/1000GP/hg19/POP/'
+def SAVE(d):
+    POPS=None
+    def load(x,path):
+        method,chrom,_,_= x.name
+        skp=(0,1)[method=='xpehh']
+        f=lambda x: pd.read_csv(path+'/'+x,skiprows=skp,sep='\t',header=None).iloc[:,[1,-2]].set_index(1).iloc[:,0].rename(method)
+        a= f(x[0])
+        a.index.name='POS'
+        return a
+
+    def getMethod(x):
+        if 'ihs' in x : return 'ihs'
+        if 'nsl' in x : return 'nsl'
+        if 'xpehh' in x : return 'xpehh'
+
+    outpath='/home/arya/storage/Data/Human/scan/selscan/'
+    getPopXP= lambda x:x.split('_')[1].split('.')[0]
+    print d
+    def saveFolder(d):
+        a=pd.Series(utl.files(path+d))
+        a=pd.DataFrame(a[a.apply(lambda x: x[-5:]=='.norm')])
+        if not a.size: return
+        a['method']=a[0].apply(getMethod)
+        a['POP']=d; a['POPXP']='NA';I=(a.method=='xpehh');a.loc[I,'POPXP']=a.loc[I,0].apply(getPopXP)
+        a['CHROM']=a[0].apply(lambda x: utl.INT(x.split('.')[0][3:]))
+        a.set_index(['method','CHROM','POP','POPXP'],inplace=True)
+        return a.groupby(level=[0,1,2,3]).apply(lambda x: load(x.loc[x.name],path+d)).unstack(['method','POP','POPXP']).sort_index()
+
+    if POPS is not None:
+        if d not in POPS:return
+    fout=outpath+d+'.df'
+    d=saveFolder(d)
+    d.to_pickle(fout)
+    try:
+        print d
+        utl.scanGenome(pd.read_pickle(fout).abs()).to_pickle(fout.replace('.df','.idf'))
+    except:
+        pass
+def mergeidf(path='/home/arya/storage/Data/Human/scan/selscan/'):
+    print 'merging idfs'
+    a=pd.Series(utl.files(path))
+    a=a[a.apply(lambda x: x[-4:]=='.idf')]
+    a=a[a!='panel.idf']
+    b=pd.concat(map(lambda x: pd.read_pickle(path+x),a.values[:]),1).sort_index(1)
+    b.to_pickle(path+'panel.idf')
+    b.isnull().mean().sort_values()
+
+#multiprocessing.Pool(10).map(SAVE,os.listdir(path) );mergeidf()
+multiprocessing.Pool(10).map(SAVE,['KGZ','Healthy','Sick','Normo','Hyper','No-HAPH','HAPH'])
+mergeidf()

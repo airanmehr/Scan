@@ -8,6 +8,7 @@
 #PBS -l mem=30gb
 #PBS -j oe
 #PBS -p 100
+
 cd "$PBS_O_WORKDIR"
 numproc=$procPerNode
 echo $method $VCF     >>./selscan.out
