@@ -24,7 +24,11 @@ import optparse
 parser = optparse.OptionParser()
 parser.add_option( '--method', action="store", dest="method", help="path to synchronized file created by popoolation2")
 parser.add_option( '--vcfgz', action="store", dest="vcf", help="path to pandas dataframe")
+<<<<<<< HEAD
 parser.add_option( '--vcfgzxp', action="store", dest="vcfxp", help="path to pandas dataframe")
+=======
+parser.add_option( '--vcfgzXP', action="store", dest="vcfXP", help="path to pandas dataframe",  default=None)
+>>>>>>> 2e1eb740ed10e8947f1ec254cd0e6604c1f5e39a
 parser.add_option( '--pop', action="store", dest="pop",  default=None)
 parser.add_option( '--popxp', action="store", dest="popxp",  default=None)
 parser.add_option( '--panel', action="store", dest="panel", default=None)
@@ -42,7 +46,7 @@ def scan(VCFin, method, pop=None,panel=None,nProc=1):
     print chrom;sys.stdout.flush()
     utl.VCF.createGeneticMap(VCFin, chrom)
     output = VCFin.split(".vcf")[0]
-    cmd = "{} --{} --vcf {} --map {} --out {} --threads {} --trunc-ok".format(selscan,method.lower(), VCFin, VCFin+'.map', output, nProc)
+    cmd = "{} --{} --vcf {} --maf 0.1 --map {} --out {} --threads {} --trunc-ok".format(selscan,method.lower(), VCFin, VCFin+'.map', output, nProc)
     print cmd
     os.system(cmd)
     print 'Done!',pop,chrom
@@ -58,6 +62,7 @@ def split():
         VCF=map(lambda pop:utl.VCF.subset(VCF,pop,panel,chrom),POPS)
         map(lambda vcf:utl.VCF.createGeneticMap(vcf, chrom),VCF)
 
+<<<<<<< HEAD
 
 # pop='No-HAPH'
 # popxp='HAPH'
@@ -80,13 +85,44 @@ def scanXP(VCFin1, VCFin2,  pop, popxp,nProc=1):
 
 if __name__ == "__main__":
     VCF,VCFxp,method,pop,panel,proc, popxp=options.vcf,options.vcfxp,options.method,options.pop,options.panel,options.proc, options.popxp
+=======
+def scanXP(VCFin, VCFinXP,  pop, popXP,panel,nProc=1):
+    print """
+    :param VCFin: {}
+    :param VCFinXP: {}
+    :param pop: {}
+    :param popXP: {}
+    :param panel: {}
+    :param nProc: {}
+    """.format(VCFin, VCFinXP,  pop, popXP,panel,nProc)
+    print "running {} on".format(method)#, VCFin
+    chrom=getCHROM(VCFin)
+    #if VCFin is None:VCFin=utl.VCF.subset(VCFin,pop,panel,chrom);#
+    #if VCFinXP is None: VCFinXP=utl.VCF.subset(VCFin,popXP,panel,chrom);
+    utl.VCF.createGeneticMap(VCFin, chrom)
+    output = VCFin.split(".vcf")[0]
+    cmd = "{} --xpehh --vcf {} --vcf-ref {} --maf 0.1 --map {} --out {}.{}_{} --threads {} --trunc-ok".format(selscan, VCFin,VCFinXP, VCFin+'.map', output,pop,popXP, nProc)
+    print cmd
+    os.system(cmd)
+    print 'Done!',pop,popXP,chrom
+    return '{}.{}_{}.{}.out'.format(output,pop,popXP,'xpehh')
+
+if __name__ == "__main__":
+    VCF,VCFXP,method,pop,panel,proc, popxp=options.vcf,options.vcfXP,options.method,options.pop,options.panel,options.proc, options.popxp
+>>>>>>> 2e1eb740ed10e8947f1ec254cd0e6604c1f5e39a
     # proc=10;VCF='/pedigree2/projects/HA_selection2/Beagle/filtered/chr2.1kg.phase3.v5a.vcf.gz';method='ihs';pop='CEU';panel='/home/arya/HA_selection2/Beagle/panel'
     #proc=10;VCF='/pedigree2/projects/HA_selection2/1000GP/hg19/POP/CEU/chr22.vcf.gz';method='ihs';pop=None;panel='/home/arya/HA_selection2/Beagle/panel'
     #proc=10;VCF='/pedigree2/projects/HA_selection2/Kyrgyz/hg19/phased/chr22.vcf.gz';method='ihs';pop='Sick';popxp='Healthy';panel='~/HA_selection2/Kyrgyz/kyrgyz.panel'
+    #proc=1;VCF='VCF=/pedigree2/projects/HA_selection2/1000GP/hg19/POP/KGZ/phased/HAPH/chr22.vcf.gz';pop='HAPH';method='nsl'; popxp=None;panel='~/HA_selection2/Kyrgyz/panel/kyrgyz.panel'
     #split()
+<<<<<<< HEAD
     if popxp is not None:
         out=scanXP(VCF,VCFxp,pop,popxp,proc)
+=======
+    if popxp is not None or VCFXP is not None:
+        out=scanXP(VCF,VCFXP,pop,popxp,panel,proc)
+>>>>>>> 2e1eb740ed10e8947f1ec254cd0e6604c1f5e39a
     else:
         out=scan(VCF,method,pop,panel,proc)
-    print 'Normalizing...'
+    print 'Normalizing...',out
     os.system("grep -v 'nan' {0} > {0}.tmp && mv {0}.tmp {0} && {1} --{2} --files {0}".format(out,selscanNorm,method.replace('nsl','ihs')))
