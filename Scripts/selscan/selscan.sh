@@ -10,11 +10,11 @@ pops=$(qstat | grep arya | grep "H " | awk '{print $2}' | tr '.' '\t' | cut -f1 
 echo $pops
 echo $pops | wc
 echo $pops >>./selscan.out && echo $pops |wc >>./selscan.out
-for pop in $pops
+for pop in KGZ Sick HAPH
 do
 for method in   ihs nsl
 do
-for CHROM in {1..22} X
+for CHROM in {1..22} #X
 do
 
     VCF=/pedigree2/projects/HA_selection2/Kyrgyz/hg19/phased/chr$CHROM.vcf.gz

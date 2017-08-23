@@ -14,4 +14,4 @@
 cd "$PBS_O_WORKDIR"
 numproc=$procPerNode
 #echo $method $VCF >>~/qsub.out
-python ./selscan.py   --vcfgz $VCF --pop $pop --popxp $popxp --panel $panel --proc $numproc >> ~/qsub.out 2>> ~/qsub.out
+python ./selscan.py   --vcfgz $vcf1 --vcfgzxp $vcf2 --pop $pop --popxp $popxp --panel $panel --proc $numproc >> ~/qsub.out 2>> ~/qsub.out
