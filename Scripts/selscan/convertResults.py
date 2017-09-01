@@ -31,9 +31,6 @@ def save(f='chr{}.1kg.phase3.v5a.{}.{}.out',method='ihs',POP='CEU',savepkl=True)
         a.index.names=['CHROM','POS'];a=pd.concat([a],1,keys=[pop]);a.columns.names=['POP','STAT']
         if savepkl:a.to_pickle('{}{}.{}.df'.format(path,pop,method))
 
-<<<<<<< HEAD
-map(lambda x: save(f='chr{}{}.{}.out{}.norm',method=x,POP=(POP,XPPOP)[x=='xpehh']),['ihs','nsl','xpehh'][:1])
-=======
 #map(lambda x: save(f='chr{}{}.{}.out{}.norm',method=x,pop=(POP,XPPOP)[x=='xpehh']),['ihs','nsl','xpehh'][-1:])
 path='/home/arya/HA_selection2/1000GP/hg19/POP/'
 def SAVE(d):
@@ -84,6 +81,22 @@ def mergeidf(path='/home/arya/storage/Data/Human/scan/selscan/'):
     b.isnull().mean().sort_values()
 
 #multiprocessing.Pool(10).map(SAVE,os.listdir(path) );mergeidf()
-multiprocessing.Pool(10).map(SAVE,['KGZ','Healthy','Sick','Normo','Hyper','No-HAPH','HAPH'])
-mergeidf()
->>>>>>> 2e1eb740ed10e8947f1ec254cd0e6604c1f5e39a
+# multiprocessing.Pool(10).map(SAVE,['KGZ','Healthy','Sick','Normo','Hyper','No-HAPH','HAPH'])
+# mergeidf()
+
+def saveXPEHH(pop,popxp):
+    print pop,popxp
+    f=utl.home+'POP/{1}/chr{0}.{1}_{2}.xpehh.out.norm'
+    a=pd.concat(map(lambda x: pd.concat([pd.read_csv(f.format(x, pop, popxp), sep='\t')[['pos', 'normxpehh']].set_index('pos').iloc[:, 0].rename(
+        'xpehh')], keys=[x]),range(1,23)))
+    a.index.names=['CHROM','POS']
+    a.sort_index().to_pickle(utl.home+'POP/{0}/{0}.{1}.xpehh.df'.format(pop,popxp))
+
+def SAVEXPEHH():
+    # saveXPEHH('KGZ','JPT')
+    # saveXPEHH('No-HAPH', 'HAPH')
+    saveXPEHH('Healthy', 'HAPH')
+    # saveXPEHH('Healthy', 'Sick')
+SAVEXPEHH()
+
+
