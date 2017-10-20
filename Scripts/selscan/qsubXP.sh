@@ -11,6 +11,7 @@
 #PBS -l mem=30gb
 #PBS -j oe
 #PBS -p 100
+#PBS -q high
 cd "$PBS_O_WORKDIR"
 numproc=$procPerNode
 #echo $method $VCF >>~/qsub.out

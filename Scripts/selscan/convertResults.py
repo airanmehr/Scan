@@ -80,7 +80,7 @@ def mergeidf(path='/home/arya/storage/Data/Human/scan/selscan/'):
     b.to_pickle(path+'panel.idf')
     b.isnull().mean().sort_values()
 
-#multiprocessing.Pool(10).map(SAVE,os.listdir(path) );mergeidf()
+# multiprocessing.Pool(10).map(SAVE,os.listdir(path) );mergeidf()
 # multiprocessing.Pool(10).map(SAVE,['KGZ','Healthy','Sick','Normo','Hyper','No-HAPH','HAPH'])
 # mergeidf()
 
@@ -95,8 +95,8 @@ def saveXPEHH(pop,popxp):
 def SAVEXPEHH():
     # saveXPEHH('KGZ','JPT')
     # saveXPEHH('No-HAPH', 'HAPH')
-    saveXPEHH('Healthy', 'HAPH')
+    # saveXPEHH('Healthy', 'HAPH')
     # saveXPEHH('Healthy', 'Sick')
-SAVEXPEHH()
+# SAVEXPEHH()
 
 

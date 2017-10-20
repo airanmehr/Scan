@@ -71,11 +71,12 @@ def scanXP(VCFin, VCFinXP,  pop, popXP,panel,nProc=1):
     chrom=getCHROM(VCFin)
     #if VCFin is None:VCFin=utl.VCF.subset(VCFin,pop,panel,chrom);#
     #if VCFinXP is None: VCFinXP=utl.VCF.subset(VCFin,popXP,panel,chrom);
-    utl.VCF.createGeneticMap(VCFin, chrom)
+    # utl.VCF.createGeneticMap(VCFin, chrom)
     output = VCFin.split(".vcf")[0]
-    cmd = "{} --xpehh --vcf {} --vcf-ref {} --maf 0.1 --map {} --out {}.{}.{} --threads {} --trunc-ok".format(selscan, VCFin,VCFinXP, VCFin+'.map', output,pop,popXP, nProc)
+    cmd = "{} --xpehh --vcf {} --vcf-ref {} --maf 0.1 --cutoff 0.1 --map {} --out {}.{}.{} --threads {} --trunc-ok".format(selscan, VCFin,VCFinXP, VCFin+'.map', output,pop,popXP, nProc)
     print cmd
-    os.system(cmd)
+    sys.stdout.flush()
+    # os.system(cmd)
     print 'Done!',pop,popXP,chrom
     return '{}.{}.{}.{}.out'.format(output,pop,popXP,'xpehh')
 
@@ -103,7 +104,8 @@ if __name__ == "__main__":
         out=scan(VCF,method,pop,panel,proc)
     print 'Normalizing...',out
     # os.system("grep -v 'nan' {0} > {0}.tmp && mv {0}.tmp {0} && {1} --{2} --files {0}".format(out,selscanNorm,method.replace('nsl','ihs')))
-    pops = ('', '{}.{}.'.format(pop, popxp))[method == 'xpehh']
-    f=os.path.dirname(out) + '/chr{}.{}.{}gz'.format(utl.INT(out.split('chr')[1].split('.')[0]),method,pops)
+    # for x in $(ls * out); do grep -v 'nan' $x > $x.tmp & & mv $x.tmp $x & & ~ / workspace / bio / Scan / selscan / bin / linux / norm --xpehh --files $x; done
+    pops = (pop, '{}.{}'.format(pop, popxp))[method == 'xpehh']
+    f=os.path.dirname(out) + '/chr{}.{}.{}.gz'.format(utl.INT(out.split('chr')[1].split('.')[0]),pops,method)
     utl.gz.save(load(out).rename(method),f)
 
