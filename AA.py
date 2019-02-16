@@ -12,7 +12,7 @@ import seaborn as sns
 import pylab as plt;
 import matplotlib as mpl
 import os;
-import Utils.Util as utl
+import UTILS.Util as utl
 
 def createMap():
     f='/home/arya/storage/Data/Human/20130502/ALL/dataframe/chr{}.df'

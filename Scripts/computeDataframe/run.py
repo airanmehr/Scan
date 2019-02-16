@@ -10,7 +10,7 @@ import seaborn as sns
 import pylab as plt;
 import matplotlib as mpl
 import os;
-import Utils.Util as utl
+import UTILS.Util as utl
 from time import  time
 startTime=time()
 

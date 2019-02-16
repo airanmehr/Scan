@@ -15,7 +15,7 @@ import matplotlib as mpl
 import os;
 
 home = os.path.expanduser('~') + '/'
-import Utils.Util as utl
+import UTILS.Util as utl
 
 if __name__ == "__main__":
     vcf,chrom=sys.argv[1:]

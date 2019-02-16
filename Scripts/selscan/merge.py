@@ -1,6 +1,7 @@
 import numpy as np;
-import sys
-sys.path.insert(1,'/home/arya/workspace/bio/')
+
+import os; import sys
+home = os.path.expanduser('~');sys.path.insert(1,home+'/workspace/bio/')
 np.set_printoptions(linewidth=200, precision=5, suppress=True)
 import pandas as pd;
 
@@ -12,7 +13,7 @@ from multiprocessing import Pool
 import pylab as plt;
 import matplotlib as mpl
 import os
-import Utils.Util as utl
+import UTILS.Util as utl
 outpath='/home/arya/scan/selscan/'
 def mergeXP():
     a=pd.read_csv('/home/arya/workspace/bio/Scripts/LearningSelection/XPSFS/pops',header=None).iloc[:,0]

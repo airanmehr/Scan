@@ -12,9 +12,9 @@ import seaborn as sns
 import pylab as plt;
 import matplotlib as mpl
 import os;
-import Utils.Util as utl
-import Utils.Estimate as est
-import Utils.Plots as pplt
+import UTILS.Util as utl
+import UTILS.Estimate as est
+import UTILS.Plots as pplt
 from multiprocessing import Pool
 
 def loadChrom(CHROM,pop=None):

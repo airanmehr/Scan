@@ -11,9 +11,9 @@ pd.options.display.expand_frame_repr = False
 import seaborn as sns
 import pylab as plt;
 import matplotlib as mpl
-import Utils.Util as utl
+import UTILS.Util as utl
 import os,sys
-import Utils.Estimate as est
+import UTILS.Estimate as est
 home = os.path.expanduser('~') + '/'
 #CHROM=22
 CHROM=sys.argv[1]

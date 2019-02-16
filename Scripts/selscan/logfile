@@ -1,0 +1,6 @@
+/home/arya/workspace/bio/Scan/selscan/bin/linux/norm --xpehh --files /pedigree2/projects/HA_selection2/1000GP/hg19/POP/Healthy/chr15.Healthy_Sick.xpehh.out 
+
+
+Total loci: 201196
+num	mean	variance
+195782	-0.0223884	0.0779813

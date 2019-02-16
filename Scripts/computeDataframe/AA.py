@@ -14,7 +14,7 @@ import matplotlib as mpl
 import os;
 
 home = os.path.expanduser('~') + '/'
-import Utils.Util as utl
+import UTILS.Util as utl
 
 def saveAA38():
     m=pd.read_pickle('/home/arya/storage/Data/Human/20130502/ALL/dataframe/map.df')

@@ -16,7 +16,7 @@ import Scripts.KyrgysHAPH.Util as kutl
 path='/media/arya/d4565cf2-d44a-4b67-bf97-226a486c01681/Data/Human/20130502/scan/selscan/'
 path='/home/arya/HA_selection2/Kyrgyz/hg19/phased/selscan/'
 
-import Utils.Util as utl
+import UTILS.Util as utl
 POP=['KGZ','HAPH','No-HAPH','Normo','Hyper','Sick','Healthy']
 XPPOP=['No-HAPH_HAPH','Healthy_Sick','Normo_Hyper']
 CHROM=range(1,23)
